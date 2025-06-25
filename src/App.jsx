@@ -32,7 +32,7 @@ function App() {
       {/* <Auth /> */}
       <Router>
         <Routes>
-          <Route path="/products" element={<ProductList />} />
+          <Route path="/product" element={<ProductList />} />
         </Routes>
       </Router>
     </>

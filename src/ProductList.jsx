@@ -4,84 +4,74 @@ import { useLocation, useNavigate } from "react-router-dom";
 function ProductList() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const [filters, setFilters] = useState({
+  const [filter, setFilter] = useState({
     category: "",
     sort: "",
     page: 1,
   });
-
-  // Load filters from URL on mount or when URL changes
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    setFilters({
+    setFilter({
       category: params.get("category") || "",
       sort: params.get("sort") || "",
       page: parseInt(params.get("page")) || 1,
     });
   }, [location.search]);
-
-  // Update URL when filters change
-  const updateUrl = (newFilters) => {
+  const updateUrl = (newFilter) => {
     const params = new URLSearchParams();
-    if (newFilters.category) params.set("category", newFilters.category);
-    if (newFilters.sort) params.set("sort", newFilters.sort);
-    params.set("page", newFilters.page);
-    navigate(`/products?${params.toString()}`);
+    if (newFilter.category) params.set("category", newFilter.category);
+    if (newFilter.sort) params.set("sort", newFilter.sort);
+    if (newFilter.page) params.set("page", newFilter.page);
+    navigate(`/product?${params.toString()}`);
   };
-
   return (
-    <div>
+    <>
       <h2>Product List</h2>
-
       <div>
-        <label>Category: </label>
+        <label htmlFor="category">category:</label>
         <select
-          value={filters.category}
+          value={filter.category}
           onChange={(e) =>
-            updateUrl({ ...filters, category: e.target.value, page: 1 })
+            updateUrl({ ...filter, category: e.target.value, page: 1 })
           }
         >
           <option value="">All</option>
-          <option value="shoes">Shoes</option>
-          <option value="clothes">Clothes</option>
+          <option value="Shoes">Shoes</option>
+          <option value="Cloths">Cloths</option>
+          <option value="Jwellery">Jwellery</option>
+          <option value="Perfume">Perfume</option>
         </select>
-      </div>
-
+      </div>{" "}
       <div>
-        <label>Sort: </label>
+        <label htmlFor="sort">sort:</label>
         <select
-          value={filters.sort}
+          value={filter.sort}
           onChange={(e) =>
-            updateUrl({ ...filters, sort: e.target.value, page: 1 })
+            updateUrl({ ...filter, sort: e.target.value, page: 1 })
           }
         >
-          <option value="">Default</option>
-          <option value="price-asc">Price Low to High</option>
-          <option value="price-desc">Price High to Low</option>
+          <option value="">All</option>
+          <option value="high">high</option>
+          <option value="low">low</option>
         </select>
       </div>
-
       <div>
         <button
-          onClick={() => updateUrl({ ...filters, page: filters.page - 1 })}
-          disabled={filters.page <= 1}
+          onClick={() => updateUrl({ ...filter, page: filter.page - 1 })}
+          disabled={filter.page <= 1}
         >
-          Prev
+          Perv
         </button>
-        <span> Page {filters.page} </span>
-        <button
-          onClick={() => updateUrl({ ...filters, page: filters.page + 1 })}
-        >
-          Next
+        <span> Page {filter.page} </span>
+        <button onClick={() => updateUrl({ ...filter, page: filter.page + 1 })}>
+          Perv
         </button>
       </div>
-
       <div>
-        <h4>Current Filters:</h4>
-        <pre>{JSON.stringify(filters, null, 2)}</pre>
+        <h4>CurrentFilters</h4>
+        <pre>{JSON.stringify(filter)}</pre>
       </div>
-    </div>
+    </>
   );
 }
 
