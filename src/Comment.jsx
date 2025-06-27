@@ -4,19 +4,16 @@ function Comment() {
   const [input, setInput] = useState("");
   const [comments, setComments] = useState([]);
 
-  const handleAddComment = (e) => {
+  const handleAddChange = (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
-
     const newComment = {
       id: Date.now(),
       text: input.trim(),
       liked: false,
-      replies: [],
       replyText: "",
+      replies: [],
     };
-
-    setComments([newComment, ...comments]);
+    setComments([...comments, newComment]);
     setInput("");
   };
 
@@ -28,7 +25,7 @@ function Comment() {
     );
   };
 
-  const handleReplyInputChange = (id, value) => {
+  const handleReplyChange = (id, value) => {
     setComments((prev) =>
       prev.map((comment) =>
         comment.id === id ? { ...comment, replyText: value } : comment
@@ -57,10 +54,11 @@ function Comment() {
 
   return (
     <>
-      <form onSubmit={handleAddComment}>
+      <h1>Comment Here</h1>
+      <form onSubmit={handleAddChange}>
         <input
           type="text"
-          placeholder="Comment here"
+          placeholder="Comment here...!"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
@@ -80,21 +78,18 @@ function Comment() {
           <form onSubmit={(e) => handleAddReply(e, comment.id)}>
             <input
               type="text"
-              placeholder="Add a reply..."
               value={comment.replyText}
-              onChange={(e) =>
-                handleReplyInputChange(comment.id, e.target.value)
-              }
+              onChange={(e) => handleReplyChange(comment.id, e.target.value)}
             />
             <button type="submit">Reply</button>
           </form>
 
           {comment.replies.length > 0 && (
-            <ol type="i">
+            <ul>
               {comment.replies.map((reply) => (
                 <li key={reply.id}>{reply.text}</li>
               ))}
-            </ol>
+            </ul>
           )}
         </div>
       ))}

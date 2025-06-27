@@ -26,8 +26,8 @@ function App() {
       {/* <Todo /> */}
       {/* <TodoReducer /> */}
       {/* <PreviousCounter /> */}
-      <SearchableTodoList />
-      {/* <Comment /> */}
+      {/* <SearchableTodoList /> */}
+      <Comment />
 
       {/* <Auth /> */}
       {/* <Router>
