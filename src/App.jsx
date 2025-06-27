@@ -26,15 +26,15 @@ function App() {
       {/* <Todo /> */}
       {/* <TodoReducer /> */}
       {/* <PreviousCounter /> */}
-      {/* <SearchableTodoList /> */}
+      <SearchableTodoList />
       {/* <Comment /> */}
 
       {/* <Auth /> */}
-      <Router>
+      {/* <Router>
         <Routes>
           <Route path="/product" element={<ProductList />} />
         </Routes>
-      </Router>
+      </Router> */}
     </>
   );
 }

@@ -69,7 +69,7 @@ function ProductList() {
       </div>
       <div>
         <h4>CurrentFilters</h4>
-        <pre>{JSON.stringify(filter)}</pre>
+        <p>{JSON.stringify(filter)}</p>
       </div>
     </>
   );

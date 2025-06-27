@@ -1,38 +1,37 @@
-import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 function SearchableTodoList() {
   const [input, setInput] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todo, setTodo] = useState([]);
   useEffect(() => {
     axios
       .get("https://jsonplaceholder.typicode.com/todos")
-      .then((res) => setTodos(res.data))
-      .catch((err) => {
-        console.log(err);
-      });
+      .then((res) => setTodo(res.data))
+      .catch((err) => console.log(err));
   }, []);
-  const filterTodo = useMemo(() => {
-    const searchQuery = input.toLowerCase();
-    return searchQuery
-      ? todos.filter((todo) => todo.title.toLowerCase().includes(searchQuery))
-      : [];
-  }, [input, todos]);
+  const filterTodo =
+    input.trim() === ""
+      ? []
+      : todo.filter((todo) =>
+          todo.title.toLowerCase().startsWith(input.toLowerCase())
+        );
+
   return (
-    <div>
-      <h1>Searchable Todo</h1>
+    <>
+      <h1>SearchableTodo</h1>
       <input
         type="text"
-        placeholder="Search Here"
         value={input}
+        placeholder="Search here...."
         onChange={(e) => setInput(e.target.value)}
       />
       <ul>
-        {filterTodo.map((item, idx) => (
+        {filterTodo.map((item) => (
           <li key={item.id}>{item.title}</li>
         ))}
       </ul>
-    </div>
+    </>
   );
 }
 
